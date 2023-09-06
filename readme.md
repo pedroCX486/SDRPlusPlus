@@ -14,7 +14,7 @@ SDR++ is a cross-platform and open source SDR software with the aim of being blo
 
 # Builds / Releases
 
-We only provide nightly builds that contain the latest commits. You can download them in the [https://github.com/pedroCX486/SDRPlusPlus/releases](releases page).
+We only provide nightly builds that contain the latest commits. You can download them in the [releases page](https://github.com/pedroCX486/SDRPlusPlus/releases).
 
 # Contributing
 
