@@ -90,7 +90,7 @@ jobs:
         steps:
         - uses: actions/checkout@v3
         
-        - name: Create Build Environment
+        - name: Prepare build environment
           run: cmake -E make_directory ${{runner.workspace}}/build
           
         - name: Remove superfluous packages and update brew repositories
@@ -102,7 +102,7 @@ jobs:
         - name: Install volk
           run: git clone --recursive https://github.com/gnuradio/volk && cd volk && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make -j3 && sudo make install && cd ../../
 
-        - name: Build and install RTL-SDR Drivers
+        - name: Install librtlsdr
           run: |
             chmod +x rtlsdr_build.sh
             ./rtlsdr_build.sh
@@ -122,9 +122,6 @@ jobs:
 
         - name: Install libperseus
           run: git clone https://github.com/Microtelecom/libperseus-sdr && cd libperseus-sdr && autoreconf -i && ./configure --prefix=/usr/local && make && make install && cd ..
-
-        - name: Install more recent librtlsdr
-          run: git clone https://github.com/osmocom/rtl-sdr && cd rtl-sdr && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ../../
 
         - name: Prepare CMake
           working-directory: ${{runner.workspace}}/build
