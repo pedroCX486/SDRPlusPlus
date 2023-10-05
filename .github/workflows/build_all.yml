@@ -101,7 +101,7 @@ jobs:
           run: git clone https://github.com/myriadrf/LimeSuite && cd LimeSuite && mkdir builddir && cd builddir && cmake -DCMAKE_BUILD_TYPE=Release .. && make -j6 && sudo make install && cd ../../
 
         - name: Install libperseus
-          run: git clone https://github.com/pedroCX486/libperseus-sdr && cd libperseus-sdr && autoreconf -i && ./configure --prefix=/usr/local LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ..
+          run: git clone https://github.com/Microtelecom/libperseus-sdr && cd libperseus-sdr && sed -i '' 's/libusb-1.0/\/opt\/homebrew\/include\/libusb-1.0/g' perseus-in.h && sed -i '' 's/libusb-1.0/\/opt\/homebrew\/include\/libusb-1.0/g' perseus-sdr.h && sed -i '' 's/libusb-1.0/\/opt\/homebrew\/include\/libusb-1.0/g' perseusfx2.h && autoreconf -i && ./configure --prefix=/usr/local LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ..
 
         - name: Install librtlsdr
           run: git clone https://github.com/rtlsdrblog/rtl-sdr-blog.git && cd rtl-sdr-blog/ && mkdir build && cd build/ && cmake -DCMAKE_C_COMPILER=gcc-13 -DCMAKE_BUILD_TYPE=Release ../ && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ../../
