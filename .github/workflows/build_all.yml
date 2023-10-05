@@ -82,6 +82,9 @@ jobs:
         - name: Install dependencies
           run: brew install pkg-config libusb fftw glfw airspy airspyhf portaudio hackrf libbladerf codec2 zstd autoconf automake libtool && pip3 install mako
 
+        - name: Fix codec2
+          run: sed -i '' 's/codec2\/version.h/version.h/g' /opt/homebrew/Cellar/codec2/1.2.0/include/codec2/codec2.h
+
         - name: Install volk
           run: git clone --recursive https://github.com/gnuradio/volk && cd volk && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make -j6 && sudo make install && cd ../../
 
