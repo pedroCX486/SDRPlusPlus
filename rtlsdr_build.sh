@@ -7,7 +7,7 @@ cd rtl-sdr-blog/
 mkdir build
 cd build/
 
-cmake -DCMAKE_BUILD_TYPE=Release ../
+cmake -DCMAKE_C_COMPILER=gcc-13 -DCMAKE_BUILD_TYPE=Release ../
 
 make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//')
 
