@@ -136,7 +136,7 @@ jobs:
           run: >
             mkdir sdrpp_all && 
             mv sdrpp_macos_intel/sdrpp_macos_intel.zip sdrpp_all/ &&
-            mv sdrpp_macos_intel/sdrpp_macos_arm.zip sdrpp_all/
+            mv sdrpp_macos_arm/sdrpp_macos_arm.zip sdrpp_all/
 
         - uses: actions/upload-artifact@v3
           with:
