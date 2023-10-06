@@ -1,6 +1,6 @@
 # What's the point of this fork?
  
-This fork adds custom builds of the RTL-SDR's fork of their drivers instead of the Osmocom drivers to better support the RTL-SDR v4 (and some of their other hardware) and the latest commits of SDR++'s main repo.
+This builds and uses RTL-SDR's own fork of their drivers instead of the Osmocom drivers to better support the RTL-SDR v4 (and some of their other hardware) and the latest commits of SDR++'s main repo.
 
 --------------
 
