@@ -42,7 +42,7 @@ cp 'C:/Program Files/PothosSDR/bin/libad9361.dll' sdrpp_windows_x64/
 cp $build_dir/source_modules/rfspace_source/Release/rfspace_source.dll sdrpp_windows_x64/modules/
 
 cp $build_dir/source_modules/rtl_sdr_source/Release/rtl_sdr_source.dll sdrpp_windows_x64/modules/
-cp 'C:/Program Files/PothosSDR/bin/rtlsdr.dll' sdrpp_windows_x64/
+# cp 'C:/Program Files/PothosSDR/bin/rtlsdr.dll' sdrpp_windows_x64/
 
 cp $build_dir/source_modules/rtl_tcp_source/Release/rtl_tcp_source.dll sdrpp_windows_x64/modules/
 
@@ -87,6 +87,8 @@ cp $build_dir/misc_modules/rigctl_server/Release/rigctl_server.dll sdrpp_windows
 
 cp $build_dir/misc_modules/scanner/Release/scanner.dll sdrpp_windows_x64/modules/
 
+# Copy RTL SDR drivers
+cp 'C:/Program Files/rtlsdr/x64/rtlsdr.dll' sdrpp_windows_x64/
 
 # Copy supporting libs
 cp 'C:/Program Files/PothosSDR/bin/libusb-1.0.dll' sdrpp_windows_x64/
