@@ -201,7 +201,7 @@ jobs:
               path: ${{runner.workspace}}/sdrpp_macos_arm.zip
   
     create_artifact_archive:
-        needs: ['build_macos_x86', 'build_macos_arm']
+        needs: ['build_windows', 'build_macos_x86', 'build_macos_arm']
         runs-on: ubuntu-latest
 
         steps:
@@ -211,6 +211,7 @@ jobs:
         - name: Create Artifact Archive
           run: >
             mkdir sdrpp_all && 
+            mv sdrpp_windows_x64/sdrpp_windows_x64.zip sdrpp_all/ && 
             mv sdrpp_macos_intel/sdrpp_macos_intel.zip sdrpp_all/ &&
             mv sdrpp_macos_arm/sdrpp_macos_arm.zip sdrpp_all/
 
