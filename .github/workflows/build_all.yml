@@ -45,7 +45,7 @@ jobs:
           run: Invoke-WebRequest -Uri "https://github.com/rtlsdrblog/rtl-sdr-blog/releases/latest/download/Release.zip" -OutFile ${{runner.workspace}}/rtlsdr.zip
 
         - name: Install RTL-SDR Drivers
-          run: 7z x ${{runner.workspace}}/rtlsdr.zip -o"C:/Program Files/"
+          run: 7z x ${{runner.workspace}}/rtlsdr.zip -o"C:/Program Files/rtlsdr/"
 
         - name: Download codec2
           run: git clone https://github.com/AlexandreRouma/codec2
