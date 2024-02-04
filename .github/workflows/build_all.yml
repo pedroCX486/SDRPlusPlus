@@ -195,7 +195,7 @@ jobs:
           run: cd $GITHUB_WORKSPACE && sh make_macos_bundle.sh ${{runner.workspace}}/build ./SDR++.app && zip -r ${{runner.workspace}}/sdrpp_macos_arm.zip SDR++.app
 
         - name: Upload Artifact
-          uses: actions/upload-artifact@v3
+          uses: actions/upload-artifact@v4
           with:
               name: sdrpp_macos_arm
               path: ${{runner.workspace}}/sdrpp_macos_arm.zip
@@ -206,7 +206,7 @@ jobs:
 
         steps:
         - name: Download Build Artifacts
-          uses: actions/download-artifact@v3
+          uses: actions/download-artifact@v4
 
         - name: Create Artifact Archive
           run: >
