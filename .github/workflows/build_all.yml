@@ -89,7 +89,7 @@ jobs:
               name: sdrpp_windows_x64
               path: ${{runner.workspace}}/sdrpp_windows_x64.zip
 
-    build_macos:
+    build_macos_x86:
         runs-on: macos-latest
 
         steps:
