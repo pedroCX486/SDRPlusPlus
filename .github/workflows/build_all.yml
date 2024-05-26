@@ -90,7 +90,7 @@ jobs:
               path: ${{runner.workspace}}/sdrpp_windows_x64.zip
 
     build_macos_x86:
-        runs-on: macos-latest
+        runs-on: macos-12
 
         steps:
         - uses: actions/checkout@v4
@@ -99,7 +99,7 @@ jobs:
           run: cmake -E make_directory ${{runner.workspace}}/build
           
         - name: Install managed dependencies
-          run: brew update && brew install pkg-config libusb fftw glfw airspy airspyhf portaudio hackrf libbladerf codec2 zstd autoconf automake libtool && pip3 install mako --break-system-packages
+          run: brew update && brew install pkg-config libusb fftw glfw airspy airspyhf portaudio hackrf libbladerf codec2 zstd autoconf automake libtool && pip3 install mako
 
         - name: Install volk
           run: git clone --recursive https://github.com/gnuradio/volk && cd volk && mkdir build && cd build && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release .. && make -j3 && sudo make install && cd ../../
