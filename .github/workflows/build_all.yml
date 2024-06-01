@@ -105,7 +105,7 @@ jobs:
           run: git clone --recursive https://github.com/gnuradio/volk && cd volk && mkdir build && cd build && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release .. && make -j3 && sudo make install && cd ../../
 
         - name: Install librtlsdr
-          run: git clone https://github.com/rtlsdrblog/rtl-sdr-blog.git && cd rtl-sdr-blog/ && mkdir build && cd build/ && cmake -DCMAKE_C_COMPILER=gcc-13 -DCMAKE_BUILD_TYPE=Release ../ && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ../../
+          run: git clone https://github.com/rtlsdrblog/rtl-sdr-blog.git && cd rtl-sdr-blog/ && mkdir build && cd build/ && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release ../ && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ../../
 
         - name: Install SDRplay API
           run: wget https://www.sdrplay.com/software/SDRplayAPI-macos-installer-universal-3.15.0.pkg && sudo installer -pkg SDRplayAPI-macos-installer-universal-3.15.0.pkg -target /
@@ -174,7 +174,7 @@ jobs:
           run: git clone https://github.com/Microtelecom/libperseus-sdr && cd libperseus-sdr && sed -i '' 's/libusb-1.0/\/opt\/homebrew\/include\/libusb-1.0/g' perseus-in.h && sed -i '' 's/libusb-1.0/\/opt\/homebrew\/include\/libusb-1.0/g' perseus-sdr.h && sed -i '' 's/libusb-1.0/\/opt\/homebrew\/include\/libusb-1.0/g' perseusfx2.h && autoreconf -i && ./configure --prefix=/usr/local LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ..
 
         - name: Install librtlsdr
-          run: git clone https://github.com/rtlsdrblog/rtl-sdr-blog.git && cd rtl-sdr-blog/ && mkdir build && cd build/ && cmake -DCMAKE_C_COMPILER=gcc-13 -DCMAKE_BUILD_TYPE=Release ../ && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ../../
+          run: git clone https://github.com/rtlsdrblog/rtl-sdr-blog.git && cd rtl-sdr-blog/ && mkdir build && cd build/ && cmake -DCMAKE_BUILD_TYPE=Release ../ && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ../../
 
         - name: Prepare CMake
           working-directory: ${{runner.workspace}}/build
