@@ -15,6 +15,7 @@ option(OPT_BUILD_AUDIO_SOURCE "Build Audio Source Module (Dependencies: rtaudio)
 option(OPT_BUILD_BADGESDR_SOURCE "Build BadgeSDR Source Module (Dependencies: libusb)" OFF)
 option(OPT_BUILD_BLADERF_SOURCE "Build BladeRF Source Module (Dependencies: libbladeRF)" OFF)
 option(OPT_BUILD_FILE_SOURCE "Wav file source" ON)
+option(OPT_BUILD_FOBOSSDR_SOURCE "Build FobosSDR Source Module (Dependencies: libfobos)" OFF)
 option(OPT_BUILD_HACKRF_SOURCE "Build HackRF Source Module (Dependencies: libhackrf)" ON)
 option(OPT_BUILD_HAROGIC_SOURCE "Build Harogic Source Module (Dependencies: htra_api)" OFF)
 option(OPT_BUILD_HERMES_SOURCE "Build Hermes Source Module (no dependencies required)" ON)
@@ -43,6 +44,7 @@ option(OPT_BUILD_PORTAUDIO_SINK "Build PortAudio Sink Module (Dependencies: port
 
 # Decoders
 option(OPT_BUILD_ATV_DECODER "Build ATV decoder (no dependencies required)" OFF)
+option(OPT_BUILD_DAB_DECODER "Build the DAB/DAB+ decoder (no dependencies required)" OFF)
 option(OPT_BUILD_FALCON9_DECODER "Build the falcon9 live decoder (Dependencies: ffplay)" OFF)
 option(OPT_BUILD_KG_SSTV_DECODER "Build the KG SSTV (KG-STV) decoder module (no dependencies required)" OFF)
 option(OPT_BUILD_M17_DECODER "Build the M17 decoder module (Dependencies: codec2)" OFF)
@@ -141,6 +143,10 @@ endif (OPT_BUILD_BLADERF_SOURCE)
 if (OPT_BUILD_FILE_SOURCE)
 add_subdirectory("source_modules/file_source")
 endif (OPT_BUILD_FILE_SOURCE)
+
+if (OPT_BUILD_FOBOSSDR_SOURCE)
+add_subdirectory("source_modules/fobossdr_source")
+endif (OPT_BUILD_FOBOSSDR_SOURCE)
 
 if (OPT_BUILD_HACKRF_SOURCE)
 add_subdirectory("source_modules/hackrf_source")
@@ -241,6 +247,10 @@ endif (OPT_BUILD_NEW_PORTAUDIO_SINK)
 if (OPT_BUILD_ATV_DECODER)
 add_subdirectory("decoder_modules/atv_decoder")
 endif (OPT_BUILD_ATV_DECODER)
+
+if (OPT_BUILD_DAB_DECODER)
+add_subdirectory("decoder_modules/dab_decoder")
+endif (OPT_BUILD_DAB_DECODER)
 
 if (OPT_BUILD_FALCON9_DECODER)
 add_subdirectory("decoder_modules/falcon9_decoder")
