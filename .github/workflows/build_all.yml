@@ -34,25 +34,22 @@ jobs:
         - name: Patch Pothos with earlier libusb version
           working-directory: ${{runner.workspace}}
           run: 7z x libusb.7z -olibusb_old ; rm "C:/Program Files/PothosSDR/bin/libusb-1.0.dll" ; cp "libusb_old/VS2015/MS64/dll/libusb-1.0.dll" "C:/Program Files/PothosSDR/bin/"
- 
-        - name: Download librtlsdr
-          run: Invoke-WebRequest -Uri "https://ftp.osmocom.org/binaries/windows/rtl-sdr/rtl-sdr-64bit-20240623.zip" -OutFile ${{runner.workspace}}/rtl-sdr.zip
-
-        - name: Patch Pothos with newer librtlsdr version
-          working-directory: ${{runner.workspace}}
-          run: 7z x rtl-sdr.zip ; rm "C:/Program Files/PothosSDR/bin/rtlsdr.dll" ; cp "rtl-sdr-64bit-20240623/librtlsdr.dll" "C:/Program Files/PothosSDR/bin/rtlsdr.dll"
-
-        - name: Download SDRPlay API
-          run: Invoke-WebRequest -Uri "https://www.sdrpp.org/SDRplay.zip" -OutFile ${{runner.workspace}}/SDRplay.zip
-
-        - name: Install SDRPlay API
-          run: 7z x ${{runner.workspace}}/SDRplay.zip -o"C:/Program Files/"
 
         - name: Download RTL-SDR Drivers
           run: Invoke-WebRequest -Uri "https://github.com/rtlsdrblog/rtl-sdr-blog/releases/latest/download/Release.zip" -OutFile ${{runner.workspace}}/rtlsdr.zip
 
         - name: Install RTL-SDR Drivers
           run: 7z x ${{runner.workspace}}/rtlsdr.zip -o"C:/Program Files/rtlsdr/"
+
+        - name: Patch Pothos with newer RTL-SDR drivers
+          working-directory: ${{runner.workspace}}
+          run: rm "C:/Program Files/PothosSDR/bin/rtlsdr.dll" ; cp "C:/Program Files/rtlsdr/x64/rtlsdr.dll" "C:/Program Files/PothosSDR/bin/rtlsdr.dll"
+
+        - name: Download SDRPlay API
+          run: Invoke-WebRequest -Uri "https://www.sdrpp.org/SDRplay.zip" -OutFile ${{runner.workspace}}/SDRplay.zip
+
+        - name: Install SDRPlay API
+          run: 7z x ${{runner.workspace}}/SDRplay.zip -o"C:/Program Files/"
 
         - name: Download codec2
           run: git clone https://github.com/AlexandreRouma/codec2
