@@ -99,62 +99,6 @@ jobs:
               name: sdrpp_windows_x64
               path: ${{runner.workspace}}/sdrpp_windows_x64.zip
 
-    build_macos_intel:
-        runs-on: macos-13
-
-        steps:
-        - uses: actions/checkout@v4
-        
-        - name: Prepare build environment
-          run: cmake -E make_directory ${{runner.workspace}}/build
-          
-        - name: Install managed dependencies
-          run: brew update && brew install pkg-config libusb fftw glfw airspy airspyhf portaudio hackrf libbladerf codec2 zstd autoconf automake libtool spdlog && pip3 install mako
-        - name: Install volk
-          run: git clone --recursive https://github.com/gnuradio/volk && cd volk && mkdir build && cd build && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release .. && make -j3 && sudo make install && cd ../../
-
-        - name: Install librtlsdr
-          run: git clone https://github.com/rtlsdrblog/rtl-sdr-blog.git && cd rtl-sdr-blog/ && mkdir build && cd build/ && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release ../ && make -j3 LIBRARY_PATH=$(pkg-config --libs-only-L libusb-1.0 | sed 's/\-L//') && sudo make install && cd ../../
-
-        - name: Install SDRplay API
-          run: wget https://www.sdrplay.com/software/SDRplayAPI-macos-installer-universal-3.15.0.pkg && sudo installer -pkg SDRplayAPI-macos-installer-universal-3.15.0.pkg -target /
-
-        - name: Install libiio
-          run: wget https://github.com/analogdevicesinc/libiio/archive/refs/tags/v0.25.zip && 7z x v0.25.zip && cd libiio-0.25 && mkdir build && cd build && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release .. && make -j3 && sudo make install && cd ../../
-
-        - name: Install libad9361
-          run: git clone https://github.com/analogdevicesinc/libad9361-iio && cd libad9361-iio && mkdir build && cd build && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release .. && make -j3 && sudo make install && cd ../../
-
-        - name: Install LimeSuite
-          run: git clone https://github.com/myriadrf/LimeSuite && cd LimeSuite && mkdir builddir && cd builddir && cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release .. && make -j3 && sudo make install && cd ../../
-
-        - name: Install libperseus
-          run: git clone https://github.com/Microtelecom/libperseus-sdr && cd libperseus-sdr && autoreconf -i && ./configure --prefix=/usr/local && make -j3 && make install && cd ..
-
-        - name: Install librfnm
-          run: git clone https://github.com/AlexandreRouma/librfnm && cd librfnm && mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make && sudo make install && cd ..
-
-        - name: Install libfobos
-          run: git clone https://github.com/AlexandreRouma/libfobos && cd libfobos && mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make && sudo make install && cd ..
-
-        - name: Prepare CMake
-          working-directory: ${{runner.workspace}}/build
-          run: cmake -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 $GITHUB_WORKSPACE -DOPT_BUILD_PLUTOSDR_SOURCE=ON -DOPT_BUILD_BLADERF_SOURCE=ON -DOPT_BUILD_SDRPLAY_SOURCE=ON -DOPT_BUILD_LIMESDR_SOURCE=ON -DOPT_BUILD_AUDIO_SINK=OFF -DOPT_BUILD_PORTAUDIO_SINK=ON -DOPT_BUILD_NEW_PORTAUDIO_SINK=ON -DOPT_BUILD_M17_DECODER=ON -DOPT_BUILD_PERSEUS_SOURCE=ON -DOPT_BUILD_AUDIO_SOURCE=OFF -DOPT_BUILD_RFNM_SOURCE=ON -DOPT_BUILD_FOBOSSDR_SOURCE=ON -DUSE_BUNDLE_DEFAULTS=ON -DCMAKE_BUILD_TYPE=Release
-
-        - name: Build
-          working-directory: ${{runner.workspace}}/build
-          run: make VERBOSE=1 -j3
-
-        - name: Create Artifact
-          working-directory: ${{runner.workspace}}
-          run: cd $GITHUB_WORKSPACE && sh make_macos_bundle.sh ${{runner.workspace}}/build ./SDR++.app && zip -r ${{runner.workspace}}/sdrpp_macos_intel.zip SDR++.app
-
-        - name: Upload Artifact
-          uses: actions/upload-artifact@v4
-          with:
-              name: sdrpp_macos_intel
-              path: ${{runner.workspace}}/sdrpp_macos_intel.zip
-
     build_macos_arm:
         runs-on: macos-14
 
@@ -216,7 +160,7 @@ jobs:
               path: ${{runner.workspace}}/sdrpp_macos_arm.zip
   
     create_artifact_archive:
-        needs: ['build_windows', 'build_macos_intel', 'build_macos_arm']
+        needs: ['build_windows', 'build_macos_arm']
         runs-on: ubuntu-latest
 
         steps:
@@ -227,7 +171,6 @@ jobs:
           run: >
             mkdir sdrpp_all && 
             mv sdrpp_windows_x64/sdrpp_windows_x64.zip sdrpp_all/ && 
-            mv sdrpp_macos_intel/sdrpp_macos_intel.zip sdrpp_all/ &&
             mv sdrpp_macos_arm/sdrpp_macos_arm.zip sdrpp_all/
 
         - uses: actions/upload-artifact@v4
